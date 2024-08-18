@@ -31,6 +31,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
 from .const import DOMAIN, SERVICE_TEACH_FACE
+from security import safe_requests
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -68,7 +69,7 @@ def check_box_health(url, username, password):
     if username:
         kwargs["auth"] = requests.auth.HTTPBasicAuth(username, password)
     try:
-        response = requests.get(url, **kwargs, timeout=10)
+        response = safe_requests.get(url, **kwargs, timeout=10)
         if response.status_code == HTTPStatus.UNAUTHORIZED:
             _LOGGER.error("AuthenticationError on %s", CLASSIFIER)
             return None
