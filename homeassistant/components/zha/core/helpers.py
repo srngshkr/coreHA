@@ -15,7 +15,6 @@ import enum
 import functools
 import itertools
 import logging
-from random import uniform
 import re
 from typing import TYPE_CHECKING, Any, TypeVar
 
@@ -35,6 +34,7 @@ from homeassistant.helpers.typing import ConfigType
 
 from .const import CLUSTER_TYPE_IN, CLUSTER_TYPE_OUT, CUSTOM_CONFIGURATION, DATA_ZHA
 from .registries import BINDABLE_CLUSTERS
+import secrets
 
 if TYPE_CHECKING:
     from .device import ZHADevice
@@ -339,7 +339,7 @@ def retryable_req(
                 except exceptions as ex:
                     errors.append(ex)
                     if delay:
-                        delay = uniform(delay * 0.75, delay * 1.25)
+                        delay = secrets.SystemRandom().uniform(delay * 0.75, delay * 1.25)
                         cluster_handler.debug(
                             "%s: retryable request #%d failed: %s. Retrying in %ss",
                             func.__name__,
