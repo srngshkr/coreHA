@@ -5,7 +5,6 @@ import asyncio
 import datetime
 from datetime import timedelta
 import logging
-from random import randrange
 from typing import Any, cast
 
 import aiohttp
@@ -52,6 +51,7 @@ from homeassistant.helpers.update_coordinator import (
 from homeassistant.util import Throttle, dt as dt_util
 
 from .const import DOMAIN as TIBBER_DOMAIN, MANUFACTURER
+import secrets
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -339,7 +339,7 @@ class TibberSensorElPrice(TibberSensor):
         """Initialize the sensor."""
         super().__init__(tibber_home=tibber_home)
         self._last_updated: datetime.datetime | None = None
-        self._spread_load_constant = randrange(5000)
+        self._spread_load_constant = secrets.SystemRandom().randrange(5000)
 
         self._attr_available = False
         self._attr_extra_state_attributes = {
