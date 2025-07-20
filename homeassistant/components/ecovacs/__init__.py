@@ -1,6 +1,5 @@
 """Support for Ecovacs Deebot vacuums."""
 import logging
-import random
 import string
 
 from sucks import EcoVacsAPI, VacBot
@@ -16,6 +15,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import discovery
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.typing import ConfigType
+import secrets
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -42,7 +42,7 @@ ECOVACS_DEVICES = "ecovacs_devices"
 
 # Generate a random device ID on each bootup
 ECOVACS_API_DEVICEID = "".join(
-    random.choice(string.ascii_uppercase + string.digits) for _ in range(8)
+    secrets.choice(string.ascii_uppercase + string.digits) for _ in range(8)
 )
 
 
